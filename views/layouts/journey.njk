@@ -8,3 +8,13 @@
 {% block header %}
   {% include "components/header.njk" %}
 {% endblock %}
+
+{# Add back link, if appropriate #}
+{% block beforeContent %}
+  {% if not inEditMode %}
+    {{ govukBackLink({
+      text: t('common:back'),
+      href: '/three/tasks'
+    }) }}
+  {% endif %}
+{% endblock %}

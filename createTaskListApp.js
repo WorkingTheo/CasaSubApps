@@ -33,10 +33,17 @@ export default function createTaskListApp(sessionStore) {
 
   ancillaryRouter.use('/tasks', (req, res) => {
     const data = req.session.journeyContextList[0][1].data
+
+    if (data.name?.name || data.surname?.surname) {
+      res.locals.isNameStarted = true;
+    }
     if (data.name?.name && data.surname?.surname) {
       res.locals.isNameCompleted = true;
     }
 
+    if (data.nino?.nino || data.description?.description) {
+      res.locals.isBasicInfoStarted = true;
+    }
     if (data.nino?.nino && data.description?.description) {
       res.locals.isBasicInfoCompleted = true;
     }

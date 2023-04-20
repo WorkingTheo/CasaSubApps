@@ -14,7 +14,9 @@
       </span>
       {% if isNameCompleted %}
         <strong class="govuk-tag app-task-list__tag hidden" id="pfullname-status-completed" aria-hidden="">Completed</strong>
-      {% else  %}
+      {% elif isNameStarted %}
+        <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="fullname-status">Started</strong>
+      {% else %}
         <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="fullname-status">Not started</strong>
       {% endif %}
     </li>
@@ -24,7 +26,9 @@
       </span>
       {% if isBasicInfoCompleted %}
         <strong class="govuk-tag app-task-list__tag hidden" id="pfullname-status-completed" aria-hidden="">Completed</strong>
-      {% else  %}
+      {% elif isBasicInfoStarted %}
+        <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="fullname-status">Started</strong>
+      {% else %}
         <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="fullname-status">Not started</strong>
       {% endif %}
     </li>
