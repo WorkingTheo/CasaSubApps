@@ -1,0 +1,10 @@
+{% extends "layouts/journey.njk" %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+
+{% block journey_form %}
+    {{ govukSummaryList({
+        classes: 'govuk-!-margin-bottom-6',
+        rows: rows
+    }) }}
+
+{% endblock %}

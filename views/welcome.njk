@@ -1,0 +1,10 @@
+
+{% extends "layouts/main.njk" %}
+
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% block content %}
+  <h1 class="govuk-heading-xl">{{ t('welcome:h1', { salutation: salutation }) }}</h1>
+
+  <a href="url://basicInfo/name">Basic Info</a>
+{% endblock %}

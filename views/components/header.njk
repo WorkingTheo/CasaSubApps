@@ -1,0 +1,12 @@
+{% from "govuk/components/header/macro.njk" import govukHeader %}
+
+{{ govukHeader({
+  assetsPath: assetPath + "/images",
+  serviceName: t('common:serviceName') if t else '',
+  serviceUrl: casa.mountUrl,
+  homepageUrl: "https://www.gov.uk/",
+  navigation: [
+    { "text":"Account", "href":"/account" },
+    { "text":"Form", "href":"/start"}
+  ]
+}) }}

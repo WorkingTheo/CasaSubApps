@@ -1,0 +1,20 @@
+{% extends "layouts/journey.njk" %}
+
+{# New GOVUK Frontend macros #}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+
+{# New CASA wrapper macros #}
+{% from "casa/components/input/macro.njk" import casaGovukInput with context %}
+
+{% block journey_form %}
+    {{ casaGovukInput({
+        name: 'nino',
+        value: formData.nino,
+        label: {
+            text: "NINo",
+            classes: 'govuk-label--m'
+        },
+        classes: 'govuk-!-width-one-half',
+        casaErrors: formErrors
+    }) }}
+{% endblock %}

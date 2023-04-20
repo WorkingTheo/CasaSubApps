@@ -1,0 +1,32 @@
+{% extends "layouts/main.njk" %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+
+{% block content %}
+  <div>
+    <a href="/one/name">Name</a>
+    <a href="/two/nino">Basic Info</a>
+  </div>
+
+  <ul class="app-task-list__items">
+    <li class="app-task-list__item" id="patientFullName">
+      <span class="app-task-list__task-name">
+        <a href="/one/name">Name</a>
+      </span>
+      {% if isNameCompleted %}
+        <strong class="govuk-tag app-task-list__tag hidden" id="pfullname-status-completed" aria-hidden="">Completed</strong>
+      {% else  %}
+        <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="fullname-status">Not started</strong>
+      {% endif %}
+    </li>
+    <li class="app-task-list__item" id="patientFullName">
+      <span class="app-task-list__task-name">
+        <a href="/two/nino">Basic Info</a>
+      </span>
+      {% if isBasicInfoCompleted %}
+        <strong class="govuk-tag app-task-list__tag hidden" id="pfullname-status-completed" aria-hidden="">Completed</strong>
+      {% else  %}
+        <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="fullname-status">Not started</strong>
+      {% endif %}
+    </li>
+  </ul>
+{% endblock %}
