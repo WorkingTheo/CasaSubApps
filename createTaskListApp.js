@@ -1,7 +1,7 @@
 import express from 'express';
 
 import { noSniff } from 'helmet';
-import { configure, Plan } from '@dwp/govuk-casa';
+import { configure, JourneyContext, Plan } from '@dwp/govuk-casa';
 import { waypointUrl } from '@dwp/govuk-casa';
 
 export default function createTaskListApp(sessionStore) {
@@ -32,23 +32,28 @@ export default function createTaskListApp(sessionStore) {
   });
 
   ancillaryRouter.use('/tasks', (req, res) => {
-    const data = req.session.journeyContextList[0][1].data
+    const journeyContext = JourneyContext.getDefaultContext(req.session);
 
-    if (data.name?.name || data.surname?.surname) {
+    const nameData = journeyContext.getDataForPage('name');
+    const surnameData = journeyContext.getDataForPage('surname');
+    const ninoData = journeyContext.getDataForPage('nino');
+    const descriptionData = journeyContext.getDataForPage('description');
+
+    if (nameData?.name) {
       res.locals.isNameStarted = true;
     }
-    if (data.name?.name && data.surname?.surname) {
+    if (nameData?.name && surnameData?.surname) {
       res.locals.isNameCompleted = true;
     }
 
-    if (data.nino?.nino || data.description?.description) {
+    if (ninoData?.nino) {
       res.locals.isBasicInfoStarted = true;
     }
-    if (data.nino?.nino && data.description?.description) {
+    if (ninoData?.nino && descriptionData?.description) {
       res.locals.isBasicInfoCompleted = true;
     }
 
-    if (data.name?.name && data.surname?.surname && data.nino?.nino && data.description?.description) {
+    if (nameData?.name && surnameData?.surname && ninoData?.nino && descriptionData?.description) {
       res.redirect('/three/results');
       return;
     }
@@ -77,12 +82,17 @@ export default function createTaskListApp(sessionStore) {
 
   ancillaryRouter.use('/results', (req, res) => {
     console.log('got to results');
-    const data = req.session.journeyContextList[0][1].data;
+    const journeyContext = JourneyContext.getDefaultContext(req.session);
 
-    const nameRow = makeRow('Name', data.name.name, 'name', '/one/', '/three/results');
-    const surnameRow = makeRow('Surname', data.surname.surname, 'surname', '/one/', '/three/results');
-    const ninoRow = makeRow('Nino', data.nino.nino, 'nino', '/two/', '/three/results');
-    const descriptionRow = makeRow('Description', data.description.description, 'description', '/two/', '/three/results');
+    const nameData = journeyContext.getDataForPage('name');
+    const surnameData = journeyContext.getDataForPage('surname');
+    const ninoData = journeyContext.getDataForPage('nino');
+    const descriptionData = journeyContext.getDataForPage('description');
+
+    const nameRow = makeRow('Name', nameData.name, 'name', '/one/', '/three/results');
+    const surnameRow = makeRow('Surname', surnameData.surname, 'surname', '/one/', '/three/results');
+    const ninoRow = makeRow('Nino', ninoData.nino, 'nino', '/two/', '/three/results');
+    const descriptionRow = makeRow('Description', descriptionData.description, 'description', '/two/', '/three/results');
 
     res.locals.rows = [
       nameRow,
