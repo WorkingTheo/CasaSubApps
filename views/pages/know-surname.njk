@@ -1,0 +1,34 @@
+{% extends "layouts/journey.njk" %}
+
+{# New GOVUK Frontend macros #}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+
+{# New CASA wrapper macros #}
+{% from "casa/components/input/macro.njk" import casaGovukInput with context %}
+
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+
+{% block journey_form %}
+    {{ govukRadios({
+        classes: "govuk-radios--inline",
+        casaValue: formData.know,
+        name: "know",
+        fieldset: {
+            legend: {
+            text: "Do you know surname?",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--l"
+            }
+        },
+        items: [
+            {
+                value: "yes",
+                text: "Yes"
+            },
+            {
+                value: "no",
+                text: "No"
+            }
+        ]
+    }) }}
+{% endblock %}

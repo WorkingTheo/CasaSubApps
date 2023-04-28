@@ -5,8 +5,14 @@ import { configure, Plan } from '@dwp/govuk-casa';
 
 export default function createAppOne(sessionStore) {
   const plan = new Plan();
-  plan.addSequence('name', 'surname', 'url:///three/tasks/');
-  
+  plan.addSequence('name', 'know-surname',);
+  plan.addSkippables('surname');
+
+  plan.setRoute('know-surname', 'surname', (r,c) => c.getDataForPage('know-surname').know === 'yes');
+  plan.setRoute('know-surname', 'url:///three/tasks/', (r,c) => c.getDataForPage('know-surname').know === 'no');
+
+  plan.setRoute('surname', 'url:///three/tasks/');
+
   const { mount } = configure({
       session: {
           name: 'myappsessionid', // session cookie name 
@@ -29,6 +35,19 @@ export default function createAppOne(sessionStore) {
                     })
                   ])
                 ]
+          },
+          {
+            waypoint: 'know-surname',
+            view: 'pages/know-surname.njk',
+            fields: [
+              field('know').validators([
+                v.required.make({
+                  errorMsg: {
+                    summary: 'Tell us whether you know surname'
+                  }
+                })
+              ])
+            ]
           },
           {
               waypoint: 'surname',
